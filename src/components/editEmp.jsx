@@ -1,51 +1,52 @@
-import React, { useState, useEffect } from 'react'
-//import { useNavigate } from 'react-router';
-import './form.css'
+import React, { useState } from 'react'
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
-const Forms = () => {
 
+const EditEmp = () => {
 	const [employeesList, setemployeesList] = useState(JSON.parse(localStorage.getItem('employees')));
 	const [Name, setName] = useState('');
 	const [Emp_no, setEmp_no] = useState();
 	const [location, setlocation] = useState('');
+	const { id } = useParams();
+
+
+	const newEmp = employeesList.find((emp) => {
+		return emp.id === id
+	})
 
 	useEffect(() => {
 		localStorage.setItem('employees', JSON.stringify(employeesList));
+		setName(newEmp.Name);
+		setEmp_no(newEmp.Emp_no);
+		setlocation(newEmp.location);
 	}, [employeesList])
 
 
-	const handleAddEmpSubmit = (e) => {
-		if (!Name && !Emp_no && !location) {
-			alert('Fill the data first.')
-		}
-		else {
-			let employee = {
-				id: new Date().getTime().toString(),
-				Name,
-				Emp_no,
-				location
-			}
-			setemployeesList([...employeesList, employee]);
-			setName('');
-			setEmp_no('');
-			setlocation('');
-			alert('Successfully Added!')
-		}
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		setemployeesList(
+			employeesList.map((emp) => {
+				if (emp.id === id) {
+					return { ...emp, Name: Name, Emp_no: Emp_no, location: location }
+				}
+				return emp;
+			})
+		)
+		alert('Successfully updated!')
 	}
-
 
 
 	return (
 		<div>
-			<form autoComplete="off" onSubmit={handleAddEmpSubmit} >
+			<form autoComplete="off" onSubmit={handleSubmit} >
 				<input placeholder='Employee Name' name="Name" id="Name" value={Name} onChange={(e) => setName(e.target.value)} /><br /><br />
 				<input placeholder='Employee No.' name="Emp_no" id="Emp_no" value={Emp_no} onChange={(e) => setEmp_no(e.target.value)} /><br /><br />
 				<input placeholder='Location' name="location" id="location" value={location} onChange={(e) => setlocation(e.target.value)} /><br /><br />
-				<button type="submit">Submit</button>
+				<button type="submit">Update</button>
 			</form>
-			<br /><br />
 		</div>
 	)
 }
 
-export default Forms
+export default EditEmp
