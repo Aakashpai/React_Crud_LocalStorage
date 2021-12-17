@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Table, Button } from 'react-bootstrap'
-//import Forms from './form'
 
 const getDatafromLS = () => {
     const data = localStorage.getItem('employees');
