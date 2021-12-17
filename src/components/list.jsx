@@ -14,7 +14,7 @@ const getDatafromLS = () => {
     }
 }
 
-function List() {
+const List = () => {
 
     const [employeesList, setemployeesList] = useState(getDatafromLS());
 
