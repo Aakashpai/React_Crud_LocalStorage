@@ -11,7 +11,7 @@ function Navs() {
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="me-auto">
 						<Button variant='outline-primary'><Link to="/">Home</Link></Button> &nbsp; &nbsp;
-						<Button variant='outline-primary'><Link to="/form">Add</Link></Button>
+						<Button variant='outline-primary'><Link to="/add">Add</Link></Button>
 					</Nav>
 				</Navbar.Collapse>
 			</Navbar>
